@@ -7,6 +7,13 @@ Active: @Product.IsActive
 <br />
 Price: @Product.Price
 <br />
+This Product is: @(Product.IsActive ? "Active" : "Inactive")
+<br />
+<br />
+
+Active:
+<input type="checkbox" @bind-value="@Product.IsActive" checked="@Product.IsActive" />
+<br />
 
 Price:
 <input type="input" @bind-value="@Product.Price" @bind-value:event="oninput" />
