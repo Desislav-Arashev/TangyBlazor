@@ -27,7 +27,7 @@
         @*Price:
         <input type="input" @bind="@Product.Price" @bind:event="oninput" />*@
     </div>
-    
+
     <div class="col-6 border p-3">
         <h3 class="text-primary">Product</h3><hr />
         Name: @Product.Name
@@ -47,7 +47,40 @@
     </div>
     <br />
 
+    <div class="col-12 pt-4">
+        <h2 class="text-success">Product Table</h2>
+        <div class="row">
+            <div class="p-3">
+                <table class="table table-striped">
+                    <tbody>
+                        @foreach (var product in Products)
+                        {
+                            <tr>
+                                <td><input type="input" @bind-value="@product.Name" @bind-value:event="oninput" /></td>
+                                <td><input type="input" @bind-value="@product.Price" @bind-value:event="oninput" /></td>
+                                <td><input type="checkbox" @bind-value="@product.IsActive" checked="@product.IsActive" /></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+        <h2>Product Summary</h2>
+        <div class="row">
+            <div class="p-3">
+                @foreach (var product in Products)
+                {
+                    <p>
+                        @product.Name [@product.Price] is @(product.IsActive ? "Active" : "Inactive")
+                    </p>
+                }
+            </div>
+        </div>
+    </div>
 </div>
+
 
 @code {
     private string selectedProp = "";
@@ -65,4 +98,37 @@
                 new Demo_ProductProp() { Id = 3, Key = "Size", Value = "20oz" },
             },
         };
+
+    List<Demo_Product> Products = new();
+
+    protected override void OnInitialized()
+    {
+        Products.Add(new()
+            {
+                Id = 1,
+                Name = "Midnight Blaze",
+                IsActive = false,
+                Price = 10.99,
+                ProductProperties = new()
+            {
+                new Demo_ProductProp() { Id = 1, Key = "Color", Value = "Black" },
+                new Demo_ProductProp() { Id = 2, Key = "Flavor", Value = "Midnight Blaze" },
+                new Demo_ProductProp() { Id = 3, Key = "Size", Value = "20oz" },
+            }
+            });
+
+        Products.Add(new()
+            {
+                Id = 2,
+                Name = "Blossom Lily",
+                IsActive = true,
+                Price = 5.99,
+                ProductProperties = new()
+            {
+                new Demo_ProductProp() { Id = 1, Key = "Color", Value = "Black" },
+                new Demo_ProductProp() { Id = 2, Key = "Flavor", Value = "Rose Jasmine" },
+                new Demo_ProductProp() { Id = 3, Key = "Size", Value = "20oz" },
+            }
+            });
+    }
 }
