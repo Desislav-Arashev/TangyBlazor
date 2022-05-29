@@ -1,31 +1,13 @@
 ﻿@page "/learnblazor/demoproduct"
 
-<h3 class="text-primary">DemoProduct</h3>
+<h2 class="text-primary">DemoProduct</h2>
+<p>Favourites Total : @SelectedFavouriteCount</p>
 
 <div class="border p-2 mt-2" style="background-color:azure">
     <div class="row">
         @foreach (var product in Products)
         {
-            <div class="bg-light border m-1 col-5">
-                <h4 class="text-secondary">Product - @product.Id</h4>
-                Name - @product.Name
-                <br />
-                Show Properties: <input type="checkbox" @bind-value="product.IsActive" checked="@product.IsActive" />
-                <br />
-                @if (product.IsActive)
-                {
-                    @foreach (var productProp in product.ProductProperties)
-                    {
-                        <p>
-                            @productProp.Key - @productProp.Value
-                        </p>
-                    }
-                }
-                <br/>
-                <_EditDeleteButton IsActive="@product.IsActive">
-                </_EditDeleteButton>
-
-            </div>
+            <_IndividualProduct Product="product"></_IndividualProduct>
         }
     </div>
 </div>
@@ -34,6 +16,7 @@
     private string selectedProp = "";
 
     List<Demo_Product> Products = new();
+    private int SelectedFavouriteCount { get; set; } = 0;
 
     protected override void OnInitialized()
     {
@@ -64,5 +47,17 @@
                 new Demo_ProductProp() { Id = 3, Key = "Size", Value = "20oz" },
             }
             });
+    }
+
+    protected void FavouriteCountUpdate(bool isSelected)
+    {
+        if (isSelected)
+        {
+            SelectedFavouriteCount++;
+        }
+        else
+        {
+            SelectedFavouriteCount--;
+        }
     }
 } 
