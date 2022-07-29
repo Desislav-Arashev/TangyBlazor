@@ -1,5 +1,7 @@
 ﻿@page "/category/create"
-@using Tangy_Models
+
+@inject ICategoryRepository _categoryRepository;
+@inject NavigationManager _navigationManager;
 
 <div class="row my-2">
     <h3 class="card-title text-primary mb-3 ml-3">@Title Category</h3>
@@ -27,6 +29,7 @@
 
     private void UpsertCategory()
     {
-        Category.Name = "Button Clicked";
+        _categoryRepository.Create(Category);
+        _navigationManager.NavigateTo("category");
     }
 }
