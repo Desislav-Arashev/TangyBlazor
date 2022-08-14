@@ -46,10 +46,12 @@
     {
         if (Id == 0)
         {
+            Title = "Create";
             IsLoading = false;
         }
         else
         {
+            Title = "Edit";
             await Task.Run(LoadCategory);
         }
     }
