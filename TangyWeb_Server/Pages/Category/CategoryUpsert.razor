@@ -51,7 +51,7 @@
         }
         else
         {
-            Title = "Edit";
+            Title = "Update";
             await Task.Run(LoadCategory);
         }
     }
@@ -64,7 +64,15 @@
 
     private void UpsertCategory()
     {
-        _categoryRepository.Create(Category);
+        if (Id == 0)
+        {
+            _categoryRepository.Create(Category);
+        }
+        else
+        {
+            _categoryRepository.Update(Category);
+        }
+
         _navigationManager.NavigateTo("category");
     }
 }
