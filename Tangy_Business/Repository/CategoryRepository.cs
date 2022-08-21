@@ -26,6 +26,8 @@ namespace Tangy_Business.Repository
         public async Task<CategoryDTO> Create(CategoryDTO objDTO)
         {
             var obj = _mapper.Map<CategoryDTO, Category>(objDTO);
+            
+            obj.CreatedDate = DateTime.Now;
 
             var addedObj = _db.Categories.Add(obj);
             await _db.SaveChangesAsync();
