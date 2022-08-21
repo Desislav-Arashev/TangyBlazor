@@ -24,7 +24,7 @@ namespace Tangy_Business.Repository
             var obj = _mapper.Map<ProductDTO, Product>(objDTO);
 
             var addedObj = _db.Products.Add(obj);
-            await _db.SaveChanges();
+            await _db.SaveChangesAsync();
 
             return _mapper.Map<Product, ProductDTO>(addedObj.Entity);
         }
@@ -43,7 +43,7 @@ namespace Tangy_Business.Repository
 
         public async Task<ProductDTO> Get(int id)
         {
-            var obj = await _db.Products.FirstOrDefaultAsync(u => u.Id == id);
+            var obj = await _db.Products.Include(u => u.Category).FirstOrDefaultAsync(u => u.Id == id);
             if (obj != null)
             {
                 return _mapper.Map<Product, ProductDTO>(obj);
@@ -54,7 +54,7 @@ namespace Tangy_Business.Repository
 
         public async Task<IEnumerable<ProductDTO>> GetAll()
         {
-            return _mapper.Map<IEnumerable<Product>, IEnumerable<ProductDTO>>(_db.Products);
+            return _mapper.Map<IEnumerable<Product>, IEnumerable<ProductDTO>>(_db.Products.Include(u => u.Category));
         }
 
         public async Task<ProductDTO> Update(ProductDTO objDTO)
@@ -64,8 +64,8 @@ namespace Tangy_Business.Repository
             {
                 objFromDb.Name = objDTO.Name;
                 objFromDb.Description = objDTO.Description;
-                objFromDb.ShopFavorite = objDTO.ShopFavorite;
-                objFromDb.CustomerFavorite = objDTO.CustomerFavorite;
+                objFromDb.ShopFavorites = objDTO.ShopFavorites;
+                objFromDb.CustomerFavorites = objDTO.CustomerFavorites;
                 objFromDb.Color = objDTO.Color;
                 objFromDb.ImageUrl = objDTO.ImageUrl;
 
