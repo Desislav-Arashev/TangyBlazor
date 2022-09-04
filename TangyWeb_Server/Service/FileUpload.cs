@@ -30,7 +30,7 @@ namespace TangyWeb_Server.Service
         {
             FileInfo fileInfo = new(file.Name);
             var fileName = Guid.NewGuid().ToString() + fileInfo.Extension;
-            var folderDirectory = $"{_webHostEnvironment.WebRootPath}\\images\\product";
+            var folderDirectory = $"{_webHostEnvironment.WebRootPath}/images/product";
             if(!Directory.Exists(folderDirectory))
             {
                 Directory.CreateDirectory(folderDirectory);
@@ -42,7 +42,7 @@ namespace TangyWeb_Server.Service
 
             var fullPath = $"/images/product/{fileName}";
 
-            return fileName;
+            return fullPath;
         }
     }
 }
