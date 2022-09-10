@@ -22,11 +22,11 @@ namespace Tangy_Business.Repository
             _db = db;
             _mapper = mapper;
         }
-        
+
         public async Task<CategoryDTO> Create(CategoryDTO objDTO)
         {
             var obj = _mapper.Map<CategoryDTO, Category>(objDTO);
-            
+
             obj.CreatedDate = DateTime.Now;
 
             var addedObj = _db.Categories.Add(obj);
@@ -50,7 +50,7 @@ namespace Tangy_Business.Repository
         public async Task<CategoryDTO> Get(int id)
         {
             var obj = await _db.Categories.FirstOrDefaultAsync(u => u.Id == id);
-            if(obj!= null)
+            if (obj != null)
             {
                 return _mapper.Map<Category, CategoryDTO>(obj);
             }
@@ -66,7 +66,7 @@ namespace Tangy_Business.Repository
         public async Task<CategoryDTO> Update(CategoryDTO objDTO)
         {
             var objFromDb = await _db.Categories.FirstOrDefaultAsync(u => u.Id == objDTO.Id);
-            if (objFromDb!=null)
+            if (objFromDb != null)
             {
                 objFromDb.Name = objDTO.Name;
                 _db.Categories.Update(objFromDb);
