@@ -40,14 +40,14 @@ namespace Tangy_Business.Repository
                 _db.ProductPrices.Remove(obj);
                 return await _db.SaveChangesAsync();
             }
-            
+
             return 0;
         }
 
         public async Task<ProductPriceDTO> Get(int id)
         {
             var obj = await _db.ProductPrices.FirstOrDefaultAsync(u => u.Id == id);
-            if(obj!= null)
+            if (obj != null)
             {
                 return _mapper.Map<ProductPrice, ProductPriceDTO>(obj);
             }
@@ -55,9 +55,16 @@ namespace Tangy_Business.Repository
             return new ProductPriceDTO();
         }
 
-        public async Task<IEnumerable<ProductPriceDTO>> GetAll()
+        public async Task<IEnumerable<ProductPriceDTO>> GetAll(int? id = 0)
         {
-            return _mapper.Map<IEnumerable<ProductPrice>, IEnumerable<ProductPriceDTO>>(_db.ProductPrices);
+            if (id != null && id > 0)
+            {
+                return _mapper.Map<IEnumerable<ProductPrice>, IEnumerable<ProductPriceDTO>>(_db.ProductPrices.Where(u => u.ProductId == id));
+            }
+            else
+            {
+                return _mapper.Map<IEnumerable<ProductPrice>, IEnumerable<ProductPriceDTO>>(_db.ProductPrices);
+            }
         }
 
         public async Task<ProductPriceDTO> Update(ProductPriceDTO objDTO)
