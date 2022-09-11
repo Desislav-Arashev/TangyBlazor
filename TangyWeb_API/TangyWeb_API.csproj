@@ -7,7 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Tangy_Business\Tangy_Business.csproj" />
+    <ProjectReference Include="..\Tangy_DataAccess\Tangy_DataAccess.csproj" />
+    <ProjectReference Include="..\Tangy_Models\Tangy_Models.csproj" />
+  </ItemGroup>
 </Project>
