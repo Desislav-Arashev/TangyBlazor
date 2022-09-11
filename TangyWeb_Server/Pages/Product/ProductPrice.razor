@@ -1,4 +1,5 @@
 @page "/product/price/{Id:int}"
+@using Syncfusion.Blazor.DropDowns
 @inject IProductRepository _productRepository
 @inject IProductPriceRepository _productPriceRepository
 
@@ -23,6 +24,23 @@ else
         <img src="@Product.ImageUrl" class="w-100" />
     </div>
 </div>
+
+    <SfGrid DataSource="@ProductPrices" AllowPaging="true"
+    Toolbar="@(new List<string>{"Add", "Edit", "Update", "Delete", "Cancel"})">
+        <GridEditSettings AllowAdding="true" AllowEditing="true" AllowDeleting="true" />
+        <GridEvents OnActionBegin="ActionHandler" TValue="ProductPriceDTO" />
+
+        <GridColumns>
+            <GridColumn Field=@nameof(ProductPriceDTO.Id) HeaderText="ID" TextAlign="TextAlign.Right" Width="120"></GridColumn>
+            <GridColumn Field=@nameof(ProductPriceDTO.Size) HeaderText="Size" Width="150">
+                <EditTemplate>
+                    <SfDropDownList DataSource="SizeList" TItem="string" TValue="string" @bind-Value="((context as ProductPriceDTO).Size)"></SfDropDownList>
+                </EditTemplate>
+            </GridColumn>
+            <GridColumn Field=@nameof(ProductPriceDTO.Price) HeaderText="Price" Format="d" Type="ColumnType.Date"
+            TextAlign="TextAlign.Right" Width="130"></GridColumn>
+        </GridColumns>
+    </SfGrid>
 }
 
 
@@ -32,6 +50,16 @@ else
     private ProductDTO Product { get; set; } = new();
     private IEnumerable<ProductPriceDTO> ProductPrices { get; set; } = new List<ProductPriceDTO>();
     public bool IsLoading { get; set; } = true;
+
+    IEnumerable<String> SizeList = new List<String>()
+    {
+        "Small",
+        "Medium",
+        "Large",
+        "8oz",
+        "16oz",
+        "24oz",
+    };
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -46,5 +74,8 @@ else
         }
     }
 
+    public async void ActionHandler(ActionEventArgs<ProductPriceDTO> args)
+    {
 
+    }
 }
