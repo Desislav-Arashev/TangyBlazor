@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,16 +9,13 @@ using Tangy_Models;
 
 namespace Tangy_Business.Mapper
 {
-    public interface MappingProfile
+    public class MappingProfile : Profile
     {
-        public class MappingProfile : Profile
+        public MappingProfile()
         {
-            public MappingProfile()
-            {
-                CreateMap<Category, CategoryDTO>().ReverseMap();
-                CreateMap<Product, ProductDTO>().ReverseMap();
-                CreateMap<ProductPrice, ProductPriceDTO>().ReverseMap();
-            }
+            CreateMap<Category, CategoryDTO>().ReverseMap();
+            CreateMap<Product, ProductDTO>().ReverseMap();
+            CreateMap<ProductPrice, ProductPriceDTO>().ReverseMap();
         }
     }
 }
